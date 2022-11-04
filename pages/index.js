@@ -18,7 +18,18 @@ const index = ({ todos }) => {
                   return (
                   <li key={todo.id}>
                      <label htmlFor="">
-                        <input type="checkbox" checked={todo.is_done} name="" id="" />
+                        <input onChange={() => {
+                           fetch("/api/do-todo", {
+                              method : "POST",
+                              headers : {
+                                 "Content-Type": "application/json"
+                              },
+                              body: JSON.stringify({
+                                 id: todo.id,
+                                 is_done: !todo.is_done,
+                              }),
+                           }).then(() => window.location.reload());
+                        }} type="checkbox" checked={todo.is_done} name="" id="" />
                         {todo.label}
                      </label>
                   </li>
