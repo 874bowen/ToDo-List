@@ -1,10 +1,11 @@
 import React from 'react';
 import Head from 'next/head';
 import { XataClient } from '../util/xata';
+import { AddTodoForm } from '../components/AddToDoForm';
 
 const index = ({ todos }) => {
-   console.log("This is todos: ", todos);
-   todos.map(todo => console.log(todo.label));
+   // console.log("This is todos: ", todos);
+   // todos.map(todo => console.log(todo.label));
    return (
       <main>
          <Head>
@@ -13,6 +14,7 @@ const index = ({ todos }) => {
          <div>
             <h1>My Todo List</h1> 
             {/* <p>{todos}</p> */}
+            <AddTodoForm />
             <ul>
                {todos.map(todo => {
                   return (
