@@ -17,21 +17,34 @@ const index = ({ todos }) => {
                {todos.map(todo => {
                   return (
                   <li key={todo.id}>
-                     <label htmlFor="">
-                        <input onChange={() => {
-                           fetch("/api/do-todo", {
-                              method : "POST",
-                              headers : {
-                                 "Content-Type": "application/json"
-                              },
-                              body: JSON.stringify({
-                                 id: todo.id,
-                                 is_done: !todo.is_done,
-                              }),
-                           }).then(() => window.location.reload());
-                        }} type="checkbox" checked={todo.is_done} name="" id="" />
-                        {todo.label}
-                     </label>
+                     <div style={{"display":"flex", "gap": "3em", "align-items": "center","flex-direction": "row"}} className=''>
+                        <label htmlFor="">
+                           <input onChange={() => {
+                              fetch("/api/do-todo", {
+                                 method : "PUT",
+                                 headers : {
+                                    "Content-Type": "application/json"
+                                 },
+                                 body: JSON.stringify({
+                                    id: todo.id,
+                                    is_done: !todo.is_done,
+                                 }),
+                              }).then(() => window.location.reload());
+                           }} type="checkbox" checked={todo.is_done} name="" id="" />
+                           {todo.label}
+                        </label>
+                        <button onClick={() => {
+                              fetch("/api/delete-todo", {
+                                 method : "DELETE",
+                                 headers : {
+                                    "Content-Type": "application/json"
+                                 },
+                                 body: JSON.stringify({
+                                    id: todo.id,
+                                 }),
+                              }).then(() => window.location.reload());
+                           }}>Delete</button>
+                     </div>
                   </li>
                   );
                })}
