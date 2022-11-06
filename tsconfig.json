@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/api/do-todo.js"  ],
+, "pages/api/do-todo.js", "util/authorize.js"  ],
   "exclude": [
     "node_modules"
   ]
