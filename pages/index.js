@@ -2,6 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import { XataClient } from '../util/xata';
 import { AddTodoForm } from '../components/AddToDoForm';
+import { authorize } from "../util/authorize";
+
 
 const index = ({ todos }) => {
    // console.log("This is todos: ", todos);
@@ -19,7 +21,7 @@ const index = ({ todos }) => {
                {todos.map(todo => {
                   return (
                   <li key={todo.id}>
-                     <div style={{"display":"flex", "gap": "3em", "align-items": "center","flex-direction": "row"}} className=''>
+                     <div style={{"display":"flex", "gap": "3em", "justify-content": "space-between", "align-items": "center","flex-direction": "row"}} className=''>
                         <label htmlFor="">
                            <input onChange={() => {
                               fetch("/api/do-todo", {
@@ -60,12 +62,32 @@ export default index;
 
 const xata = new XataClient()
 
-export const getServerSideProps = async () => {
-   const todos = await xata.db.items.getMany()
+export const getServerSideProps = async ({req, res}) => {
 
-   return {
-      props: {
-         todos
-      }
+   const { isAuthenticated, username } = await authorize(req);
+
+   if (isAuthenticated){
+      const todos = await xata.db.items.getMany()
+
+      return {
+         props: {
+            todos
+         },
+      };
+   } 
+   else {
+    // const todos = await xata.db.items.getMany()
+
+    //   return {
+    //      props: {
+    //         todos
+    //      },
+    //   };
+    const body = 'hello world';
+    
+    res.writeHead(401, {
+           "WWW-Authenticate": "Basic realm='This is a private to-do list'",
+          });
+      return { redirect :{ destination: '/', permanent: true } }
    }
 }

@@ -10,6 +10,23 @@ const tables = [
       { name: "is_done", type: "bool" },
     ],
   },
+  {
+    name: "users",
+    columns: [
+      {
+        name: "username",
+        type: "string",
+        notNull: true,
+        defaultValue: "undefined",
+      },
+      {
+        name: "password",
+        type: "string",
+        notNull: true,
+        defaultValue: "undefined",
+      },
+    ],
+  },
 ];
 /** @type { import('@xata.io/client').ClientConstructor<{}> } */
 const DatabaseClient = buildClient();
