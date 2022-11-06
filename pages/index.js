@@ -76,18 +76,12 @@ export const getServerSideProps = async ({req, res}) => {
       };
    } 
    else {
-    // const todos = await xata.db.items.getMany()
+    const todos = await xata.db.items.getMany();
 
-    //   return {
-    //      props: {
-    //         todos
-    //      },
-    //   };
-    const body = 'hello world';
-    
-    res.writeHead(401, {
-           "WWW-Authenticate": "Basic realm='This is a private to-do list'",
-          });
-      return { redirect :{ destination: '/', permanent: true } }
-   }
+      return {
+         props: {
+            todos
+         },
+      };
+    }
 }
