@@ -1,5 +1,6 @@
 import { getXataClient } from "../../util/xata";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { authorize } from "../../util/authorize";
 
 // type ResponseData = {
 //    message: string
@@ -7,7 +8,13 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const xata = getXataClient();
 const handler = async (req, res) => {
-   const {id} = req.body;
+   const { isAuthenticated, username } = await authorize(req);
+   if (!isAuthenticated) {
+      res.status(401).end();
+      return;
+   }
+
+   const { id } = req.body;
    await xata.db.items.delete(id);
    res.end();
 }

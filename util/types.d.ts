@@ -14,6 +14,13 @@ declare const tables: readonly [
       {
         readonly name: "is_done";
         readonly type: "bool";
+      },
+      {
+        readonly name: "user";
+        readonly type: "link";
+        readonly link: {
+          readonly table: "users";
+        };
       }
     ];
   },

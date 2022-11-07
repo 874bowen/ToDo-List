@@ -7,7 +7,7 @@ export const AddTodoForm = () => {
    const [label, setLabel] = useState("");
    const send = () => {
       fetch("/api/add-todo", {
-         method : "PUT",
+         method : "POST",
          headers : {
             "Content-Type": "application/json"
          },
